@@ -3,6 +3,7 @@ package gwt.myproject.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -19,6 +20,7 @@ public class Kalkulator implements EntryPoint {
 	final RadioButton rbPlus = new RadioButton("dzialanie", "+");
 	final RadioButton rbMinus = new RadioButton("dzialanie", "-");
 	final RadioButton rbRazy = new RadioButton("dzialanie", "*");
+	final RadioButton rbDziel = new RadioButton("dzialanie", "/");
 	
 	
 	
@@ -28,6 +30,8 @@ public class Kalkulator implements EntryPoint {
 		rbPlus.setValue(true);
 		RootPanel.get().add(rbMinus);
 		RootPanel.get().add(rbRazy);
+		RootPanel.get().add(rbDziel);
+		
 		RootPanel.get().add(tb2);
 		
 		RootPanel.get().add(sendButton);
@@ -41,6 +45,14 @@ public class Kalkulator implements EntryPoint {
 					wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"-"));
 				if(rbRazy.getValue())
 					wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"*"));
+				if(rbDziel.getValue()){
+					if(tb2.getText().equals("0")) {
+						Window.alert("Nie wolno dzielic przez 0!");
+					}else{
+						wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"/"));
+					}					
+				}
+					
 					
 			}
 		});
@@ -59,6 +71,9 @@ public class Kalkulator implements EntryPoint {
 			break;
 		case "*":
 			wynik = val1 * val2;
+			break;
+		case "/":
+			wynik = val1 / val2;
 			break;
 		}
 		return String.valueOf(wynik);
