@@ -1,9 +1,11 @@
 package gwt.myproject.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -22,8 +24,29 @@ public class Kalkulator implements EntryPoint {
 	final RadioButton rbRazy = new RadioButton("dzialanie", "*");
 	final RadioButton rbDziel = new RadioButton("dzialanie", "/");
 	
+	private int wynik;
+	private KalkulatorServiceAsync kalkServ = GWT.create(KalkulatorService.class);
 	
+	private void refreshWatchList() {
+		// Initialize the service proxy.
+		if (kalkServ == null)
+			kalkServ = GWT.create(KalkulatorService.class);
+	}
 	
+	AsyncCallback<String> callback = new AsyncCallback<String>() {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("error");			
+		}
+
+		@Override
+		public void onSuccess(String result) {
+			wynikLabel.setText(result);			
+		}		
+	};
+	
+	@Override
 	public void onModuleLoad() {
 		RootPanel.get().add(tb1);
 		RootPanel.get().add(rbPlus);
@@ -36,12 +59,28 @@ public class Kalkulator implements EntryPoint {
 		
 		RootPanel.get().add(sendButton);
 		RootPanel.get().add(wynikLabel);
-		
 		sendButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if(rbPlus.getValue())
-					wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"+"));
-				if(rbMinus.getValue())
+					kalkServ.Oblicz(tb1.getText(),tb2.getText(),"+", callback);
+			}});
+					
+					 /*Oblicz(tb1.getText(),tb2.getText(),"+", new AsyncCallback<String>() {
+						
+						@Override
+						public void onSuccess(String result) {
+							wynikLabel.setText(result);
+							
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							wynikLabel.setText("Error");
+							
+						}
+					});*/
+					//wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"+"));
+				/*if(rbMinus.getValue())
 					wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"-"));
 				if(rbRazy.getValue())
 					wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"*"));
@@ -51,33 +90,11 @@ public class Kalkulator implements EntryPoint {
 					}else{
 						wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"/"));
 					}					
-				}
-					
-					
-			}
-		});
+				}*/
+		
+	}
 
-	}
-	public String Oblicz(String s1, String s2, String dzialanie){
-		int wynik = 0;
-		int val1 = Integer.valueOf(s1);
-		int val2 = Integer.valueOf(s2);
-		switch (dzialanie){
-		case "+":
-			wynik = val1 + val2;
-			break;
-		case "-":
-			wynik = val1 - val2;
-			break;
-		case "*":
-			wynik = val1 * val2;
-			break;
-		case "/":
-			wynik = val1 / val2;
-			break;
-		}
-		return String.valueOf(wynik);
-	}
+
 	
 }
 

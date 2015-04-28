@@ -5,11 +5,21 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
-  <!-- Servlets -->
+ <!-- Default page to serve -->
+ <welcome-file-list>
+   <welcome-file>Kalkulator.html</welcome-file>
+ </welcome-file-list>
   
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>Kalkulator.html</welcome-file>
-  </welcome-file-list>
+ <!--  Servlets -->
+ <servlet>
+     <servlet-name>kalkulatorServiceImpl</servlet-name>
+     <servlet-class>gwt.myproject.server.KalkulatorServiceImpl</servlet-class>
+ </servlet> 
+ 
+ <servlet-mapping>
+     <servlet-name>kalkulatorServiceImpl</servlet-name>
+     <url-pattern>/kalkulator/kalkulator</url-pattern>
+ </servlet-mapping>
+
 
 </web-app>

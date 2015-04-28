@@ -1,0 +1,2 @@
+serviceClass: gwt.myproject.client.KalkulatorService
+path: C771835ABB2A874842CF7C30A90967D5.gwt.rpc
