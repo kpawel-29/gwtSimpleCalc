@@ -63,35 +63,18 @@ public class Kalkulator implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				if(rbPlus.getValue())
 					kalkServ.Oblicz(tb1.getText(),tb2.getText(),"+", callback);
-			}});
-					
-					 /*Oblicz(tb1.getText(),tb2.getText(),"+", new AsyncCallback<String>() {
-						
-						@Override
-						public void onSuccess(String result) {
-							wynikLabel.setText(result);
-							
-						}
-						
-						@Override
-						public void onFailure(Throwable caught) {
-							wynikLabel.setText("Error");
-							
-						}
-					});*/
-					//wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"+"));
-				/*if(rbMinus.getValue())
-					wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"-"));
+				if(rbMinus.getValue())
+					kalkServ.Oblicz(tb1.getText(),tb2.getText(),"-", callback);
 				if(rbRazy.getValue())
-					wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"*"));
+					kalkServ.Oblicz(tb1.getText(),tb2.getText(),"*", callback);
 				if(rbDziel.getValue()){
 					if(tb2.getText().equals("0")) {
 						Window.alert("Nie wolno dzielic przez 0!");
 					}else{
-						wynikLabel.setText(Oblicz(tb1.getText(),tb2.getText(),"/"));
+						kalkServ.Oblicz(tb1.getText(),tb2.getText(),"/", callback);
 					}					
-				}*/
-		
+				}
+		}});
 	}
 
 
